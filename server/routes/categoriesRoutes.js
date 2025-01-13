@@ -6,7 +6,7 @@ const categoriesRouter = express.Router();
 categoriesRouter.get('/getCategories', getAllCategories);
 categoriesRouter.get('/getCategoryBooks/:id', getSingleCategoryBooks);
 categoriesRouter.put('/updateBookCategory', updateBookCategory);
-categoriesRouter.delete('/deleteBookCategory/:id', deleteBookCategory);
+categoriesRouter.put('/deleteBookCategory/:id', deleteBookCategory);
 
 
 export default categoriesRouter;

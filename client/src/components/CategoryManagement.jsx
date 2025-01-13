@@ -14,7 +14,7 @@ const CategoryManagement = () => {
 
     const { backendUrl } = useContext(AppContent)
 
-    const [categoryID, setCategory] = useState(1)
+    const [categoryID, setCategory] = useState(2)
 
     const [bookID, setBookID] = useState('')
     const [catID, setCatID] = useState('')
@@ -103,6 +103,17 @@ const CategoryManagement = () => {
         }
     }
 
+    const removeBookFromCategory =  (id) => {
+        return async () => {
+            const { data } = await axios.put(backendUrl + '/api/categories/deleteBookCategory/'+ id)
+            if (data.success) {
+                toast.success(data.message)
+            } else {
+                toast.error(data.message)
+            }
+        }
+    }
+
     return (
         <div className='flex flex-col w-full p-4 sm:p-6 sm:px-24 gap-10'>
             <div className='bg-slate-900 p-10 rounded-lg shadow-lg w-full text-indigo-300 text-sm mt-20'>
@@ -185,7 +196,6 @@ const CategoryManagement = () => {
                             <table className="min-w-full bg-white rounded-md shadow-md">
                                 <thead>
                                     <tr className="bg-slate-900 text-gray-300">
-                                        <th className="text-left py-3 px-4 font-semibold text-sm">id</th>
                                         <th className="text-left py-3 px-4 font-semibold text-sm">Book Title</th>
                                         <th className="text-left py-3 px-4 font-semibold text-sm">Actions</th>
                                     </tr>
@@ -195,10 +205,9 @@ const CategoryManagement = () => {
 
                                         catBooks.map(catBook => (
                                             <tr key={catBook.id} className="bg-[#333A5C] text-nowrap">
-                                                <td className="text-left py-3 px-4 font-normal text-sm">{catBook.id}</td>
                                                 <td className="text-left py-3 px-4 font-normal text-sm">{catBook.title}</td>
                                                 <td className="text-left py-3 px-4 font-normal text-sm">
-                                                    <button className='bg-gradient-to-r from-red-400 to-pink-500 text-white px-3 py-1 rounded-full'>Remove</button>
+                                                    <button onClick={removeBookFromCategory(catBook.id)} className='bg-gradient-to-r from-red-400 to-pink-500 text-white px-3 py-1 rounded-full'>Remove</button>
                                                 </td>
                                             </tr>
                                         ))

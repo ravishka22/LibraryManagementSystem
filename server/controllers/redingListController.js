@@ -46,9 +46,6 @@ export const removeBookFromReadingList = (req, res) => {
     if (!userID) {
         return res.json({ success: false, message: "User ID not found" });
     }
-    if (!books_id) {
-        return res.json({ success: false, message: "Book ID not found" });
-    }
 
     db.query("DELETE FROM `reading_list` WHERE users_id = ? AND books_id = ? ", [userID, books_id], (err, results) => {
         if (err) {

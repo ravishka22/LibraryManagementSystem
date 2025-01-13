@@ -13,7 +13,7 @@ export const getAllCategories = (req, res) => {
 export const getSingleCategoryBooks = (req, res) => {
     const { id } = req.params;
 
-    db.query("SELECT * FROM `books` INNER JOIN `categories` ON `categories`.`id`=`books`.`categories_id` WHERE `categories`.id = ?", [id], (err, results) => {
+    db.query("SELECT `books`.`id`, `title` FROM `books` INNER JOIN `categories` ON `categories`.`id`=`books`.`categories_id` WHERE `categories`.id = ?", [id], (err, results) => {
         if (err) {
             return res.json({ success: false, message: "Database error: " + err.message });
         }
@@ -43,18 +43,27 @@ export const updateBookCategory = (req, res) => {
             return res.json({ success: false, message: "Database error: " + err.message });
         }
 
-        return res.json({ success: true, message: "Book added to "+categories_id+" successfully" });
+        return res.json({ success: true, message: "Book added to category successfully" });
     });
 }
 
 export const deleteBookCategory = (req, res) => {
-    const { book_id } = req.params;
+    const book_id  = req.params.id
+    const category_id = 1;
 
-    db.query("UPDATE `books` SET `categories_id` = '1' WHERE `id` = ?", [book_id], (err, results) => {
+    console.log("Book ID:", book_id); 
+    console.log("Category ID:", category_id); 
+
+    if (!book_id) {
+        return res.json({ success: false, message: "Book ID not found" });
+    }
+
+    db.query("UPDATE `books` SET `categories_id` = ? WHERE `id` = ?", [category_id, book_id], (err, results) => {
         if (err) {
             return res.json({ success: false, message: "Database error: " + err.message });
         }
+        console.log("Query Results:", results);
 
-        return res.json({ success: true, message: "Book removed from category successfully" });
+        return res.json({ success: true, message: "Book removed from category " });
     });
 }
