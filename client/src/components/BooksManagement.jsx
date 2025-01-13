@@ -65,14 +65,14 @@ const BooksManagement = () => {
 
                 e.preventDefault();
                 axios.defaults.withCredentials = true
-    
+
                 const { data } = await axios.post(backendUrl + '/api/books/addBook', { title, author, publication_year, category })
                 if (data.success) {
                     toast.success(data.message)
                 } else {
                     toast.error(data.message)
                 }
-    
+
             } catch (error) {
                 toast.error('Something went wrong')
             }
@@ -81,19 +81,19 @@ const BooksManagement = () => {
 
                 e.preventDefault();
                 axios.defaults.withCredentials = true
-    
-                const { data } = await axios.put(backendUrl + '/api/books/updateBook/'+ id, { title, author, publication_year, category })
+
+                const { data } = await axios.put(backendUrl + '/api/books/updateBook/' + id, { title, author, publication_year, category })
                 if (data.success) {
                     toast.success(data.message)
                 } else {
                     toast.error(data.message)
                 }
-    
+
             } catch (error) {
                 toast.error(data.message)
             }
         }
-        
+
     }
 
     const updateSelectedBook = (id, title, author, year, category) => {
@@ -115,20 +115,16 @@ const BooksManagement = () => {
         }
     }
 
-    const deleteSelectedBook = (id) => {
-        try {
-            axios.defaults.withCredentials = true
+    const deleteSelectedBook =  (id) => {
 
-            const { data } = axios.delete(backendUrl + '/api/books/deleteBook/' + id)
+        return async () => {
+            const { data } = await axios.delete(backendUrl + '/api/books/deleteBook/' + id)
             if (data.success) {
                 toast.success(data.message)
             } else {
                 toast.error(data.message)
             }
-        } catch (error) {
-            toast.error(data.message)
         }
-        
     }
 
     return (
@@ -158,7 +154,7 @@ const BooksManagement = () => {
                                 <input onChange={e => setYear(e.target.value)} value={publication_year} className='bg-transparent outline-none' type="text" placeholder='Publication Year' required />
                             </div>
                             <div >
-                                <select onChange={e => setCategory(e.target.value)} value={category}  className='mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-[#333A5C]' name="" id="">
+                                <select onChange={e => setCategory(e.target.value)} value={category} className='mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-[#333A5C]' name="" id="">
                                     <option value="0">Select Category</option>
                                     {
                                         categories.map((category) => (
@@ -205,7 +201,7 @@ const BooksManagement = () => {
                                                 <td className="text-left py-3 px-4">{book.publication_year}</td>
                                                 <td className="text-left py-3 px-4">
                                                     <button className='bg-gradient-to-r mx-1 from-blue-400 to-purple-500 text-white px-2 py-1 rounded-lg'>View</button>
-                                                    <button onClick={updateSelectedBook(book.id,book.title,book.author,book.publication_year,book.categories_id)} className='bg-gradient-to-r mx-1 from-green-500 to-green-600 text-white px-2 py-1 rounded-lg'>Update</button>
+                                                    <button onClick={updateSelectedBook(book.id, book.title, book.author, book.publication_year, book.categories_id)} className='bg-gradient-to-r mx-1 from-green-500 to-green-600 text-white px-2 py-1 rounded-lg'>Update</button>
                                                     <button onClick={deleteSelectedBook(book.id)} className='bg-gradient-to-r mx-1 from-red-400 to-red-500 text-white px-2 py-1 rounded-lg'>Delete</button>
                                                 </td>
                                             </tr>

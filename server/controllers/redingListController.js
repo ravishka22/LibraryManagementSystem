@@ -41,19 +41,24 @@ export const addBookToReadingList = (req, res) => {
 };
 
 export const removeBookFromReadingList = (req, res) => {
-    const { users_id, books_id } = req.body;
+    const books_id = req.params.id;
+    const userID  = req.query.userID;
+    if (!userID) {
+        return res.json({ success: false, message: "User ID not found" });
+    }
+    if (!books_id) {
+        return res.json({ success: false, message: "Book ID not found" });
+    }
 
-    // if (!users_id) {
-    //     return res.json({ success: false, message: "User id field is required" });
-    // } else if (!books_id) {
-    //     return res.json({ success: false, message: "Book id field is required" });
-    // }
-
-    db.query("DELETE FROM `reading_list` WHERE users_id = ? AND books_id = ?", [users_id, books_id], (err, results) => {
+    db.query("DELETE FROM `reading_list` WHERE users_id = ? AND books_id = ? ", [userID, books_id], (err, results) => {
         if (err) {
             return res.json({ success: false, message: "Database error: " + err.message });
         }
+        if (results.affectedRows === 0) {
+            return res.json({ success: false, message:"Book not found in reading list"});
+        }
 
         return res.json({ success: true, message: "Book removed from reading list" });
+
     });
 }

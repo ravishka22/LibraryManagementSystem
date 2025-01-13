@@ -105,21 +105,33 @@ export const updateBook = (req, res) => {
     });
 };
 
+
+
 export const deleteBook = (req, res) => {
     const { id } = req.params;
 
-    db.query("DELETE FROM `books` WHERE id = ?", [id], (err, result) => {
-        if (err) {
-            return res.json({ success: false, message: "Database error: " + err.message });
-        }
+    db.query("SELECT * FROM `reading_list` WHERE books_id = ?", [id], (err, results) => {
 
-        if (result.affectedRows === 0) {
-            return res.json({ success: false, message: "Book not found" });
+        if (results.length > 0) {
+            return res.json({ success: false, message: "Book is in a reading list" });
         }
+        db.query("DELETE FROM `books` WHERE id = ?", [id], (err, result) => {
+            if (err) {
+                return res.json({ success: false, message: "Database error: " + err.message });
+            }
 
-        return res.json({ success: true, message: "Book deleted successfully" });
+            if (result.affectedRows === 0) {
+                return res.json({ success: false, message: "Book not found" });
+            }
+
+            return res.json({ success: true, message: "Book deleted successfully" });
+        });
     });
+
+
 }
+
+
 
 export const getCategories = (req, res) => {
     db.query("SELECT * FROM `categories`", (err, results) => {

@@ -10,7 +10,7 @@ const UserReadingList = () => {
     const userID = useParams().id
 
 
-    const [users_id, setUserID] = useState(useParams().id)
+    const [users_id, setUserID] = useState(userID)
     const [books_id, setBook] = useState('')
 
     const [user, setUser] = useState({})
@@ -31,6 +31,7 @@ const UserReadingList = () => {
                 const { data } = await axios.get(backendUrl + '/api/books/getBooks')
                 if (data.success) {
                     setBooks(data.books)
+
                 } else {
                     toast.error(data.message)
                 }
@@ -67,18 +68,18 @@ const UserReadingList = () => {
                 const { data } = await axios.get(backendUrl + '/api/users/getUser/' + userID)
                 if (data.success) {
                     setUser(data.userData)
-    
+
                 } else {
                     toast.error(data.message)
                 }
             } catch (error) {
                 toast.error(data.message)
             }
-    
+
         }
 
         getUser()
-    },[])
+    }, [])
 
     const addReadingListHandler = async (e) => {
         try {
@@ -98,19 +99,16 @@ const UserReadingList = () => {
         }
     }
 
-    const removeReadingListHandler = async (id) => {
-        try {
-            axios.defaults.withCredentials = true
-
-            const { data } = await axios.delete(backendUrl + '/api/readingList/removeBook', { users_id, books_id: id })
+    const removeReadingListHandler = (id) => {
+        return async () => {
+            const { data } = await axios.delete(`${backendUrl}/api/readingList/removeBook/${id}`, {
+                params: { userID },
+            })
             if (data.success) {
                 toast.success(data.message)
             } else {
                 toast.error(data.message)
             }
-
-        } catch (error) {
-            toast.error(data.message)
         }
     }
 
@@ -134,12 +132,12 @@ const UserReadingList = () => {
                             <p></p>
                             <div className='mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-[#333A5C]'>
                                 <img src={assets.person_icon} alt="" />
-                                <input value={user.name}  className='bg-transparent outline-none' type="text" placeholder='Full Name' required disabled />
+                                <input value={user.name} className='bg-transparent outline-none' type="text" placeholder='Full Name' required disabled />
                             </div>
 
                             <div className='mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-[#333A5C]'>
                                 <img src={assets.mail_icon} alt="" />
-                                <input  className='bg-transparent outline-none' type="email" placeholder='Email Address' required disabled />
+                                <input className='bg-transparent outline-none' type="email" placeholder='Email Address' required disabled />
                             </div>
                         </div>
                         <div className='mt-10'>
@@ -156,7 +154,7 @@ const UserReadingList = () => {
 
                                     </select>
                                 </div>
-                                <button  className='w-full py-2.5 rounded-lg bg-gradient-to-r from-blue-400 to-purple-500 text-white font-semibold'>Add To List</button>
+                                <button className='w-full py-2.5 rounded-lg bg-gradient-to-r from-blue-400 to-purple-500 text-white font-semibold'>Add To List</button>
                             </form>
 
 

@@ -116,7 +116,7 @@ const UserManagement = () => {
                                                 <td className="text-left py-3 px-4">{user.name}</td>
                                                 <td className="text-left py-3 px-4">{user.email}</td>
                                                 <td className="text-left py-3 px-4">
-                                                    <button onClick={() => navigate('/adminPanel/User/'+ user.id)} className='bg-gradient-to-r mx-1 from-blue-400 to-purple-500 text-white px-2 py-1 rounded-lg'>View</button>
+                                                    <button onClick={() => navigate('/adminPanel/User/'+ user.id)} className='bg-gradient-to-r mx-1 from-blue-400 to-purple-500 text-white px-2 py-1 rounded-lg'>View Reading List</button>
                                                 </td>
                                             </tr>
                                         ))
