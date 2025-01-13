@@ -116,7 +116,7 @@ const CategoryManagement = () => {
 
     return (
         <div className='flex flex-col w-full p-4 sm:p-6 sm:px-24 gap-10'>
-            <div className='bg-slate-900 p-10 rounded-lg shadow-lg w-full text-indigo-300 text-sm mt-20'>
+            <div className='bg-slate-900 p-10 rounded-lg shadow-lg w-full text-indigo-300 text-sm mt-16'>
 
                 <div className='flex justify-between items-center align-middle pb-2'>
                     <h1 className='text-2xl sm:text-3xl font-semibold mb-4'>Categories Management</h1>
@@ -129,7 +129,7 @@ const CategoryManagement = () => {
                         <div>
                             <h2 className='text-xl font-normal mb-5'>All Categories</h2>
 
-                            <div className="rounded-md overflow-x-auto h-80 sm:h-48 ">
+                            <div className="rounded-md overflow-x-auto h-80 sm:h-36 ">
                                 <table className="min-w-full bg-white rounded-md shadow-md">
                                     <thead>
                                         <tr className="bg-slate-900 text-gray-300">
@@ -148,7 +148,7 @@ const CategoryManagement = () => {
                                 </table>
                             </div>
                         </div>
-                        <div className='mt-10'>
+                        <div className='mt-8'>
                             <h2 className='text-xl font-normal mb-5'>Add Books Into Category</h2>
                             <form onSubmit={bookCategoryHandler}>
                                 <div >
