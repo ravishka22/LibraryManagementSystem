@@ -2,6 +2,8 @@
 
 A user-friendly Library Management System designed to digitize and simplify the management of books, members, and lending operations in a library. This project supports essential features like book tracking, user management, and issuing/returning books with a clean and intuitive interface.
 
+![image](https://github.com/user-attachments/assets/87887065-c9ec-4263-b8e2-f9df7a888a0c)
+
 ---
 
 ## 🚀 Features
@@ -27,6 +29,58 @@ A user-friendly Library Management System designed to digitize and simplify the 
 | ORM (Optional) | Sequelize / Raw SQL                    |
 
 ---
+
+
+## ⚙️ Installation & Setup
+
+1.  **Clone the repository:**
+    ```
+    git clone https://github.com/ravishka22/LibraryManagementSystem.git
+    ```
+
+2.  **Navigate to the project directory:**
+    ```
+    cd LibraryManagementSystem
+    ```
+
+3.  **Install backend dependencies:**
+    ```
+    cd server
+    npm install
+    ```
+
+4.  **Install frontend dependencies:**
+    ```
+    cd ../client
+    npm install
+    ```
+5. Set Environment Variables
+
+    Create a `.env` file in the root directory and add the following:
+    
+    ```env
+    DB_HOST=localhost
+    DB_USER=root
+    DB_PASSWORD=yourpassword
+    DB_NAME=library_db
+    JWT_SECRET=your_jwt_secret
+    ```
+
+6. Setup MySQL Database
+
+    - Create a database named `library_db`
+    - If using Sequelize:
+      ```bash
+      npx sequelize-cli db:migrate
+      ```
+    - Or run provided SQL scripts manually
+
+7. Run the Server
+    
+    ```bash
+    npm run dev
+    ```
+
 
 ## 📸 Screenshots
 
